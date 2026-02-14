@@ -23,10 +23,10 @@
             text-align: center;
         }
 
-        /* --- SECCIÓN DE MARIPOSAS --- */
+        /* --- MARIPOSAS (IMAGEN) --- */
         .butterfly {
             position: fixed;
-            top: -10vh; /* Empiezan fuera de la pantalla arriba */
+            top: -10vh;
             z-index: 9999;
             pointer-events: none;
             animation: flutter linear forwards; 
@@ -35,22 +35,16 @@
             width: 100%;
             height: auto;
             display: block;
-            filter: drop-shadow(0 0 5px rgba(69, 163, 229, 0.5)); /* Brillo sutil */
+            filter: drop-shadow(0 0 5px rgba(69, 163, 229, 0.5));
         }
 
         @keyframes flutter {
-            0% { 
-                transform: translate(0, 0) rotate(0deg); 
-                opacity: 0; 
-            }
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
             10% { opacity: 0.8; }
             25% { transform: translate(-30px, 25vh) rotate(15deg); }
             50% { transform: translate(40px, 50vh) rotate(-15deg); }
             75% { transform: translate(-20px, 75vh) rotate(10deg); }
-            100% { 
-                transform: translate(50px, 110vh) rotate(-10deg); 
-                opacity: 0; 
-            }
+            100% { transform: translate(50px, 110vh) rotate(-10deg); opacity: 0; }
         }
 
         header { padding: 60px 20px; border-bottom: 2px dashed #3c2a52; }
@@ -58,25 +52,31 @@
         .subtitle { font-size: 1.5rem; color: #bfa8d8; margin-top: 10px; font-style: italic; }
         .container { max-width: 800px; margin: 0 auto; padding: 20px 20px 100px 20px; }
         
+        /* REPRODUCTOR */
         .music-section {
             margin: 40px auto;
             max-width: 90%;
             border: 2px solid #3c2a52;
             border-radius: 12px;
-            box-shadow: 0 0 20px rgba(69, 163, 229, 0.2);
+            box-shadow: 0 0 25px rgba(69, 163, 229, 0.3);
             background: #000;
+            overflow: hidden;
+            min-height: 352px;
         }
         
+        /* CONTADOR */
         #timer { display: flex; justify-content: center; gap: 20px; margin: 50px 0; flex-wrap: wrap; }
         .time-box { background: var(--card-bg); padding: 15px 25px; border: 1px solid var(--accent-blue); border-radius: 8px; min-width: 80px; }
         .time-box span:first-child { font-size: 2rem; font-weight: bold; font-family: 'Cinzel Decorative', cursive; }
         .label { display: block; font-size: 1rem; color: var(--accent-blue); }
         
+        /* GALERÍA */
         .gallery { display: flex; justify-content: center; flex-wrap: wrap; gap: 30px; margin-top: 60px; }
         .frame { background: #000; padding: 10px; width: 200px; border: 2px solid #523870; transform: rotate(-2deg); transition: transform 0.3s ease; }
         .frame:hover { transform: scale(1.1) rotate(0deg); border-color: var(--accent-blue); z-index: 10; }
         .frame img { width: 100%; height: auto; display: block; filter: sepia(20%) contrast(110%); }
 
+        /* CARTA */
         .letter-container { margin-top: 80px; padding: 40px; background: rgba(20, 10, 30, 0.8); border-left: 4px solid var(--accent-blue); text-align: justify; line-height: 1.8; font-size: 1.1rem; border-radius: 5px; }
         .letter-container h2 { font-family: 'Cinzel Decorative', cursive; color: var(--accent-blue); text-align: center; margin-bottom: 20px; }
         footer { margin-top: 60px; color: #666; font-size: 0.9rem; padding-bottom: 40px; }
@@ -92,7 +92,16 @@
     <div class="container">
         
         <div class="music-section">
-            <iframe style="border-radius:12px" src="http://googleusercontent.com/spotify.com/3" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            <iframe data-testid="embed-iframe" 
+                style="border-radius:12px" 
+                src="https://open.spotify.com/embed/playlist/48dzlpSNZ6vKo4DmXa5SyA?utm_source=generator&theme=0" 
+                width="100%" 
+                height="352" 
+                frameBorder="0" 
+                allowfullscreen="" 
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                loading="lazy">
+            </iframe>
         </div>
 
         <p style="font-size: 1.2rem;">Llevamos compartiendo la eternidad:</p>
@@ -129,7 +138,7 @@
     <footer>ME COSTO MUCHO ESPERO TE GUSTE. 🖤</footer>
 
     <script>
-        // --- RELOJ ---
+        // Fecha configurada: 21 de Abril de 2025
         const startDate = new Date(2025, 3, 21, 0, 0, 0); 
 
         function updateTimer() {
@@ -147,33 +156,24 @@
         setInterval(updateTimer, 1000);
         updateTimer();
 
-        // --- MARIPOSAS DINÁMICAS ---
+        // Efecto Mariposa con Imagen
         function createButterfly() {
             const butterfly = document.createElement('div');
+            // Asegúrate de que tu imagen se llame image_4.png
             butterfly.innerHTML = '<img src="image_4.png" alt="mariposa">'; 
             butterfly.classList.add('butterfly');
 
-            // Posición aleatoria en el ancho
             butterfly.style.left = Math.random() * 100 + 'vw';
-
-            // Tamaño aleatorio (entre 15px y 45px)
-            const size = Math.random() * 30 + 15;
+            const size = Math.random() * 25 + 20; 
             butterfly.style.width = size + 'px';
-
-            // Velocidad aleatoria (entre 6s y 11s)
-            const duration = Math.random() * 5 + 6;
+            const duration = Math.random() * 4 + 7; 
             butterfly.style.animationDuration = duration + 's';
 
             document.body.appendChild(butterfly);
-
-            // Se borra al terminar para no alentar la página
-            setTimeout(() => { 
-                butterfly.remove(); 
-            }, duration * 1000);
+            setTimeout(() => { butterfly.remove(); }, duration * 1000);
         }
 
-        // Crea una mariposa cada 800ms
-        setInterval(createButterfly, 800);
+        setInterval(createButterfly, 700);
     </script>
 </body>
 </html>
